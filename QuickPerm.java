@@ -1,0 +1,114 @@
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.ArrayList;
+public class QuickPerm {
+
+	public static void main (String args[]) {
+
+		Scanner in = new Scanner(System.in);
+
+		System.out.println("Enter a string");
+		String s = in.nextLine();
+      
+      long before = System.currentTimeMillis();
+		//Permutation p = new Permutation(s);
+		//p.getPermutation();
+      ArrayList<String> perms = perm(s);
+      long after = System.currentTimeMillis();
+      double time = (after - before)/1000.0;
+      char[] sortedWord = s.toCharArray();
+      Arrays.sort(sortedWord);
+      System.out.println("\n\nTook " + time + " seconds to calculate " + perms.size() + " permutations of " + numOfPermutations(new String(sortedWord)));
+	}
+   
+   /**
+    * Returns an arraylist of unique permutations.
+    *
+    *@author Tyler Hoover
+    */
+   public static ArrayList<String> perm(String word) {
+      ArrayList<String> permutations = new ArrayList<String>();
+      
+      char[] originalSorted = word.toCharArray();
+      Arrays.sort(originalSorted);
+      char[] value = originalSorted;
+      
+      int k = word.length();
+      
+      boolean allWordsDone = false;
+      //Start off by storing the original word.
+      permutations.add(new String(value));
+      //Loop until all words are added. The logic here is that its sorted, so loop while switching characters until its reverse sorted,
+      //Store each switch as a new word unless it is a duplicate.
+      while (!allWordsDone) {
+         //Remember the words are in abc order before coming to me. 
+         int i = k - 1;
+         while (i > 0 && value[i-1] >= value[i]) {
+            i--;
+         }
+      
+         if (i < 1) {
+            allWordsDone = true;
+            return permutations;
+         }
+      
+         int j = k;
+         while (value[j-1] <= value[i-1]) {
+            j--;
+         }
+         
+         //Swap around letters
+         char swap1 = value[i-1];
+         value[i-1] = value[j-1];
+         value[j-1] = swap1;
+         
+      
+         i++;
+         j = k;
+      
+         while (i < j) {
+            //Perform a swap
+            char swap2 = value[i-1];
+            value[i-1] = value[j-1];
+            value[j-1] = swap2;
+            i++;
+            j--;
+         }
+         
+         permutations.add(new String(value));
+      }
+      return null;
+   }
+   
+   
+   /**
+    * Returns the number of unique permutations for a word.
+    *
+    *@author Tyler Hoover
+    */
+   public static int numOfPermutations(String word) {
+      char[] toSort = word.toCharArray();
+      Arrays.sort(toSort);
+      String sortedWord = new String(toSort);
+      
+      int count = 1;
+      
+      for (int n = sortedWord.length(); n > 0; n--) {
+         count = count*n;
+      }
+      
+      int dupes = 1;
+      for (int i = 1; i < sortedWord.length(); i++) {
+         if (sortedWord.charAt(i) == sortedWord.charAt(i-1)) {
+            dupes = dupes + 1;
+         } else {
+            dupes = 1;
+         }
+         
+         //Idea is divide by 2 whenever there is a duplicate.
+         count = count / dupes;
+      }
+      
+      return count;
+   }
+}

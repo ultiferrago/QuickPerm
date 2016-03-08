@@ -11,14 +11,10 @@ public class QuickPerm {
 		String s = in.nextLine();
       
       long before = System.currentTimeMillis();
-		//Permutation p = new Permutation(s);
-		//p.getPermutation();
       ArrayList<String> perms = perm(s);
       long after = System.currentTimeMillis();
       double time = (after - before)/1000.0;
-      char[] sortedWord = s.toCharArray();
-      Arrays.sort(sortedWord);
-      System.out.println("\n\nTook " + time + " seconds to calculate " + perms.size() + " permutations of " + numOfPermutations(new String(sortedWord)));
+      System.out.println("\n\nTook " + time + " seconds to calculate " + perms.size() + " permutations of " + numOfPermutations(new String(s)));
 	}
    
    /**

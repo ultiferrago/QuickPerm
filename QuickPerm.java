@@ -3,26 +3,24 @@ import java.util.Arrays;
 import java.util.ArrayList;
 public class QuickPerm {
 
-	public static void main (String args[]) {
-
-		Scanner in = new Scanner(System.in);
-
-		System.out.println("Enter a string");
-		String s = in.nextLine();
+    public static void main (String args[]) {
+      Scanner in = new Scanner(System.in);
+      System.out.println("Enter a string");
+      String s = in.nextLine();
       
       long before = System.currentTimeMillis();
       ArrayList<String> perms = perm(s);
       long after = System.currentTimeMillis();
       double time = (after - before)/1000.0;
       System.out.println("\n\nTook " + time + " seconds to calculate " + perms.size() + " permutations of " + numOfPermutations(new String(s)));
-	}
+    }
    
    /**
     * Returns an arraylist of unique permutations.
     *
     *@author Tyler Hoover
     */
-   public static ArrayList<String> perm(String word) {
+    public static ArrayList<String> perm(String word) {
       ArrayList<String> permutations = new ArrayList<String>();
       
       char[] originalSorted = word.toCharArray();
